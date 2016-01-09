@@ -8,7 +8,8 @@ elif inputType == "file":
     myfile.close()
 else: print "Only 'cmd' and 'file' valid"; sys.exit()
 
-reg = [0 for i in range(30000)]
+cells = 30000
+reg = [0 for i in range(cells)]
 ptr = 0 #reg pointer
 pc = 0 #string pointer
 loopStk = []
@@ -23,7 +24,7 @@ while pc < len(string):
     
     elif curSym == ">":
         ptr += 1
-        if ptr >= 30000:
+        if ptr >= cells:
             print "Over array bounds."
             sys.exit()
             
