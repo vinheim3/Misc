@@ -37,8 +37,7 @@ while pc < len(string):
     elif curSym == ".": sys.stdout.write(chr(reg[ptr]))
     
     elif curSym == ",":
-        try:
-            reg[ptr] = int(input())
+        try: reg[ptr] = int(input())
         except:
             print "Invalid input."
             continue
@@ -46,18 +45,14 @@ while pc < len(string):
     elif curSym == "[":
         if reg[ptr] == 0:
             loops = 1
-            while 1:
+            while loops != 0:
                 pc += 1
                 if string[pc] == "[": loops += 1
-                elif string[pc] == "]":
-                    loops -= 1
-                    if loops == 0: break
+                elif string[pc] == "]": loops -= 1
         else: loopStk.append(pc)
             
     elif curSym == "]":
-        a = loopStk.pop()
-        if reg[ptr] != 0:
-            pc = a
-            continue
+        if reg[ptr] != 0: pc = loopStk[-1]
+        else: loopStk.pop()
         
     pc += 1
