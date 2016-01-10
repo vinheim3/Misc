@@ -1,6 +1,6 @@
 import sys
 
-def Ook(string):
+def Ook(string, inType, outType):
     from Brainfuck import Brainfuck
     
     mapp = {
@@ -21,7 +21,7 @@ def Ook(string):
         left, right = commands[i:i+1+1]
         newStr += mapp[left[3]+right[3]]
 
-    Brainfuck(newStr)
+    Brainfuck(newStr, inType, outType)
 
 if __name__ == "__main__":
     inputType = sys.argv[1]
@@ -31,5 +31,6 @@ if __name__ == "__main__":
         string = myfile.read()
         myfile.close()
     else: print "Only 'cmd' and 'file' valid"; sys.exit()
+    inType, outType = sys.argv[3]
 
-    Ook(string)
+    Ook(string, inType, outType)

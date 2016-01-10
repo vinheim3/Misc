@@ -1,0 +1,9 @@
+[Averages 2 ints to form another int. Does not currently work if the sum of the 2 ints is greater than 255]
+,>,         #read 2 ints into r0 and r1; ptr 1
+<[->+<]>    #moves r0 into r1; ptr 1
+[-          #if r1 is 1: r1 becomes 0 and 2 lines down will put ptr at 1 ready to print
+  [->+<[<]] #subtract another 1 and add 1 to r2; if r1 is now 0 ptr stays at 1 before next code
+                #otherwise ptr goes to 0 which is empty
+  >[>]<<    #if ptr is 1 go to 2 then 3 then back to 1
+]               #if ptr is 0 r1 is not empty so go there then 3 then back to 1
+>.          #print r2 which holds r1 halved floored

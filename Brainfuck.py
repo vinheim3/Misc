@@ -1,19 +1,26 @@
 import sys
 
-def Brainfuck(string):
+def Brainfuck(string, inType, outType):
     cells = 30000
     reg = [0 for i in range(cells)]
     ptr = 0 #reg pointer
     pc = 0 #string pointer
     loopStk = []
 
-    #input in the form of an int, output in the ascii representation of an int
     while pc < len(string):
         curSym = string[pc]
         
-        if curSym == "+": reg[ptr] += 1
+        if curSym == "+":
+            reg[ptr] += 1
+            if reg[ptr] > 255:
+                print "Cell value over 255."
+                sys.exit()
         
-        elif curSym == "-": reg[ptr] -= 1
+        elif curSym == "-":
+            reg[ptr] -= 1
+            if reg[ptr] < 0:
+                print "Cell value under 0."
+                sys.exit()
         
         elif curSym == ">":
             ptr += 1
@@ -27,10 +34,14 @@ def Brainfuck(string):
                 print "Under array bounds."
                 sys.exit()
                 
-        elif curSym == ".": sys.stdout.write(chr(reg[ptr]))
+        elif curSym == ".":
+            if outType == "c": sys.stdout.write(chr(reg[ptr]))
+            elif outType == "i": print "{} ".format(reg[ptr])
         
         elif curSym == ",":
-            try: reg[ptr] = int(input())
+            try:
+                if inType == "c": reg[ptr] = ord(raw_input())
+                elif inType == "i": reg[ptr] = int(raw_input())
             except:
                 print "Invalid input."
                 continue
@@ -58,5 +69,6 @@ if __name__ == "__main__":
         string = myfile.read()
         myfile.close()
     else: print "Only 'cmd' and 'file' valid"; sys.exit()
+    inType, outType = sys.argv[3]
 
-    Brainfuck(string)
+    Brainfuck(string, inType, outType)
